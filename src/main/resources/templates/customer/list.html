@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>List Customer</title>
+    <style>
+        td{
+            width: 190px;
+            text-align: center;
+        }
+        tr{
+            text-align: center;
+        }
+        .td1{
+            width: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<div style="align-items: center; background: white;height: 600px; padding: 50px">
+    <h1>List Customer</h1>
+    <table border="1" >
+        <thead>
+        <tr>
+            <td class="td1">Id</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Address</td>
+            <td>Phone</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="customer:${customerList}">
+            <td class="td1" th:text="${customer.id}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.phone}"></td>
+            <td>
+                <a th:href="@{customers/show-edit-form/{id} (id=${customer.id})} ">update</a>
+                <a th:href="@{customers/delete/{id} (id=${customer.id})}" style="color: brown">delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a type="button" href="customers/show-add-form">NEW CUSTOMER</a>
+
+</div>
+
+</body>
+</html>

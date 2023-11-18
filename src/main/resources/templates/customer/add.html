@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Customer</title>
+</head>
+<body>
+    <div style="margin: 50px">
+        <h1>ADD CUSTOMER</h1>
+        <form  th:action="@{/customers/add}" th:object="${customerAdd}" method="post"
+                style="border: 1px solid black; padding: 20px; width: 280px" >
+           <div style="margin: 20px">
+               <label>Name:</label>
+               <input placeholder="Nhập tên" id="name" th:field="*{name}">
+           </div>
+            <div style="margin: 20px">
+                <label>Email:</label>
+                <input placeholder="Nhập email" id="email" th:field="*{email}">
+            </div>
+            <div style="margin: 20px">
+                <label>Address:</label>
+                <input placeholder="Nhập dia chi" id="address" th:field="*{address}">
+            </div>
+            <div style="margin: 20px">
+                <label>Phone:</label>
+                <input placeholder="Nhập sdt" id="phone" th:field="*{phone}">
+            </div>
+
+            <button type="submit" style="margin-left: 100px; width: 80px; background: aqua">ADD</button>
+        </form>
+    </div>
+
+</body>
+</html>

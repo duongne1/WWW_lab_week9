@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIST PRODUCT</title>
+    <style>
+        td{
+            width: 190px;
+            text-align: center;
+        }
+        tr{
+            text-align: center;
+        }
+        .td1{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div style="align-items: center; background: white;height: 600px; padding: 50px">
+        <h1>LIST PRODUCT</h1>
+        <table border="1" >
+            <thead>
+            <tr>
+                <td class="td1">Id</td>
+                <td>Name</td>
+                <td>Manufacture_name</td>
+                <td>Description</td>
+                <td class="td1">Unit</td>
+                <td>Status</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product:${productList}">
+                <td class="td1" th:text="${product.product_id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.manufacturer}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.unit}" class="td1"></td>
+                <td th:text="${product.status}"></td>
+                <td>
+                    <a href="" >update</a>
+                    <a href="" style="color: brown">delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="products/show-add-form">NEW PRODUCT</a>
+    </div>
+</body>
+</html>
