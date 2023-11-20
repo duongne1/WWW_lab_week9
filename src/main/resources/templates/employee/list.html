@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIST EMPLOYEE</title>
+    <style>
+        td{
+            width: 170px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-left:  70px">
+        <h1>LIST EMPLOYEE</h1>
+        <table border="1px">
+            <thead>
+                <tr>
+                    <td style="width: 60px">Id</td>
+                    <td>Name</td>
+                    <td>Address</td>
+                    <td>Email</td>
+                    <td>Dob</td>
+                    <td>Phone</td>
+                    <td style="width: 120px">Status</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee:${employeeList}">
+                    <td style="width: 60px" th:text="${employee.id}"></td>
+                    <td th:text="${employee.fullname}"></td>
+                    <td th:text="${employee.email}"></td>
+                    <td th:text="${employee.address}"></td>
+                    <td th:text="${employee.dob}"></td>
+                    <td th:text="${employee.phone}"></td>
+                    <td  style="width: 120px" th:text="${employee.status}"></td>
+                    <td>
+                        <a th:href="@{employees/show-edit-form/{id} (id=${employee.id})}" style="color: blue">update</a>
+                        <a th:href="@{employees/delete/{id} (id=${employee.id})}" style="color: brown">delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="employees/show-add-form">NEW EMPLOYEE</a>
+    </div>
+</body>
+</html>

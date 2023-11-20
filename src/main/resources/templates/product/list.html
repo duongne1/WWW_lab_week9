@@ -40,8 +40,8 @@
                 <td th:text="${product.unit}" class="td1"></td>
                 <td th:text="${product.status}"></td>
                 <td>
-                    <a href="" >update</a>
-                    <a href="" style="color: brown">delete</a>
+                    <a   th:href="@{products/show-edit-form/{id} (id=${product.product_id})}" style="color: blue">update</a>
+                    <a th:href="@{products/delete/{id} (id=${product.product_id})}" style="color: brown">delete</a>
                 </td>
             </tr>
             </tbody>

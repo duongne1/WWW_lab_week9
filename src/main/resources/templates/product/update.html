@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UPDATE PRODUCT</title>
+    <style>
+        input{
+            margin-left: 20px;
+
+        }
+        div {
+            text-align: right;
+            margin: 15px;
+        }
+        label, select {
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<div style="align-items: center; margin: 50px">
+    <div style="border: 1px solid black; background: beige; width: 350px; height: 300px; padding: 20px">
+        <h1 style="text-align: center">UPDATE PRODUCT</h1>
+        <form th:action="@{/products/update/{id}(id=${productUpdate.product_id})}" th:object="${productUpdate}" method="post">
+            <div style="margin: 15px">
+                <label>Name:</label>
+                <input placeholder="Nhập tên" th:field="*{name}">
+            </div>
+            <div style="margin: 15px">
+                <label>Manufacture:</label>
+                <input placeholder="Nhập manufacture_name" th:field="*{manufacturer}">
+            </div>
+            <div style="margin: 15px">
+                <label>Description:</label>
+                <input placeholder="Nhập description" th:field="*{description}">
+            </div>
+            <div style="margin: 15px">
+                <label>Unit:</label>
+                <input placeholder="Nhập unit" th:field="*{unit}">
+            </div>
+            <div style="margin: 15px">
+                <label style="margin-right: 20px" for="selectStatus">Status:</label>
+                <select th:field="*{status}" id="selectStatus" style="width: 170px" >
+                    <option th:each="status: ${T(fit.iuh.edu.vn.week7.enums.ProductStatus).values()}"
+                            th:value="${status}" th:text="${status}"></option>
+                </select>
+            </div>
+
+            <button type="submit" style="margin-right: 100px; width: 80px; background: aqua">ADD</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

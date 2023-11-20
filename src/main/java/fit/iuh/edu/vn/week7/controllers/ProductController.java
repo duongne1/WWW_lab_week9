@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -30,7 +31,7 @@ public class ProductController {
         model.addAttribute("statuses", ProductStatus.values());
         return "product/add";
     }
-    //add
+    //add Product
     @PostMapping("/products/add")
     public String addProduct(
             @ModelAttribute("productAdd")    Product Product,
@@ -39,5 +40,38 @@ public class ProductController {
         return "redirect:/products";
     }
 
+
+    @GetMapping("/products/delete/{id}")
+    public String deleteProduct(@PathVariable("id") long id){
+        Product product = productRepository.findById(id).orElse(new Product());
+        productRepository.delete(product);
+        return "redirect:/products";
+    }
+
+        @GetMapping("/products/show-edit-form/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Product product = productRepository.findById(id).orElse(null);
+        model.addAttribute("productUpdate", product);
+        model.addAttribute("statuses", ProductStatus.values());
+        return "product/update";
+    }
+
+
+    @PostMapping("/products/update/{id}")
+    public String updateCustomer(@PathVariable("id") long id,
+                                 @ModelAttribute("productUpdate")  Product updateProduct) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            product.setName(updateProduct.getName());
+            product.setDescription(updateProduct.getDescription());
+            product.setUnit(updateProduct.getUnit());
+            product.setManufacturer(updateProduct.getManufacturer());
+            product.setStatus(updateProduct.getStatus());
+
+
+            productRepository.save(product);
+        }
+        return "redirect:/products";
+    }
 
 }
