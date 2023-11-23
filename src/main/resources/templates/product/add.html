@@ -42,7 +42,7 @@
             <div style="margin: 15px">
                 <label style="margin-right: 20px" for="selectStatus">Status:</label>
                 <select th:field="*{status}" id="selectStatus" style="width: 170px" >
-                    <option th:each="status: ${T(fit.iuh.edu.vn.week7.enums.ProductStatus).values()}"
+                    <option th:each="status: ${status}"
                     th:value="${status}" th:text="${status}"></option>
                 </select>
             </div>

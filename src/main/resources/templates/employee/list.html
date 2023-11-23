@@ -1,33 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>LIST EMPLOYEE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>List Employee</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <style>
-        td{
-            width: 170px;
-            text-align: center;
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        .table-responsive {
+            margin: 30px 0;
+        }
+        .table-wrapper {
+            min-width: 1000px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+            min-width: 100%;
+        }
+        .table-title h2 {
+            margin: 8px 0 0;
+            font-size: 22px;
+        }
+        .search-box {
+            position: relative;
+            float: right;
+        }
+        .search-box input {
+            height: 34px;
+            border-radius: 20px;
+            padding-left: 35px;
+            border-color: #ddd;
+            box-shadow: none;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child {
+            width: 130px;
+        }
+        table.table td a {
+            color: #a0a5b1;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        table.table td a.view {
+            color: #03A9F4;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #E34724;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+        .page-link {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 4px;
+            color: #007bff;
+            /*border: 1px solid #007bff;*/
+            /*border-radius: 4px;*/
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .page-link:hover {
+            /*background-color: #007bff;*/
+            color: #fff;
+        }
+
+        .page-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination {
+            float: right;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-right: 5px; /* Khoảng cách giữa các liên kết */
+            color: #007bff;
+            /*border: 1px solid #007bff;*/
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination .active a {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination .disabled a {
+            pointer-events: none;
+            color: #ccc;
+            border-color: #ccc;
+        }
+
+        .pagination .hint-text {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+        .page-link {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px; /* Thay đổi khoảng cách từ phần trên bảng xuống dưới phân trang */
+        }
+
+        .page-link a {
+            display: inline-block;
+            margin: 0 5px; /* Khoảng cách giữa các trang */
+            padding: 8px 12px;
+            color: #007bff;
+            /*border: 1px solid #007bff;*/
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .page-link a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .page-link .active a {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .page-link .disabled a {
+            pointer-events: none;
+            color: #ccc;
+            border-color: #ccc;
+        }
+
+        .page-link .hint-text {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
         }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 <body>
-    <div style="margin-left:  70px">
-        <h1>LIST EMPLOYEE</h1>
-        <table border="1px">
-            <thead>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Employee <b>List</b></h2></div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <a href="employees/show-add-form" class="btn btn-success"><span>Add New Employee</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
                 <tr>
-                    <td style="width: 60px">Id</td>
-                    <td>Name</td>
-                    <td>Address</td>
-                    <td>Email</td>
-                    <td>Dob</td>
-                    <td>Phone</td>
-                    <td style="width: 120px">Status</td>
-                    <td>Action</td>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Dob</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr th:each="employee:${employeeList}">
+                </thead>
+                <tbody>
+                <tr >
+                <tr th:each="employee, iStat:${employeePage.content}">
                     <td style="width: 60px" th:text="${employee.id}"></td>
                     <td th:text="${employee.fullname}"></td>
                     <td th:text="${employee.email}"></td>
@@ -36,13 +223,29 @@
                     <td th:text="${employee.phone}"></td>
                     <td  style="width: 120px" th:text="${employee.status}"></td>
                     <td>
-                        <a th:href="@{employees/show-edit-form/{id} (id=${employee.id})}" style="color: blue">update</a>
-                        <a th:href="@{employees/delete/{id} (id=${employee.id})}" style="color: brown">delete</a>
+                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
+                        <a th:href="@{employees/show-edit-form/{id} (id=${employee.id})}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a th:href="@{employees/delete/{id} (id=${employee.id})}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <a href="employees/show-add-form">NEW EMPLOYEE</a>
+
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+
+<div class="page-link" th:if="${employeePage.totalPages > 0}">
+    <a th:href="@{/employees(size=${employeePage.size}, page = 1)}">First</a>
+    <a th:href="@{/employees(size=${employeePage.size}, page = ${employeePage.number > 0 ? employeePage.number : 0})}">&laquo;</a>
+
+    <!-- Hiển thị tối đa 10 trang -->
+    <div th:each="i : ${#numbers.sequence(employeePage.number > 4 ? employeePage.number - 4 : 0, employeePage.number + 5 > employeePage.totalPages ? employeePage.totalPages : employeePage.number + 5)}" th:remove="tag">
+        <a th:href="@{/employees(size=${employeePage.size}, page = ${i})}" th:text="${i + 1}" th:class="${i == employeePage.number} ? 'active'"></a>
+    </div>
+
+    <a th:href="@{/employees(size=${employeePage.size}, page = ${employeePage.number + 1 < employeePage.totalPages ? employeePage.number + 1 : employeePage.totalPages - 1})}">&raquo;</a>
+    <a th:href="@{/employees(size=${employeePage.size}, page = ${employeePage.totalPages})}">Last</a>
+</div>
 </body>
 </html>

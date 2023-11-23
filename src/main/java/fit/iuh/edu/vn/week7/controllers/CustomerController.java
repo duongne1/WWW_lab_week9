@@ -2,24 +2,47 @@ package fit.iuh.edu.vn.week7.controllers;
 
 import fit.iuh.edu.vn.week7.models.Customer;
 import fit.iuh.edu.vn.week7.repositories.CustomerRepository;
+import fit.iuh.edu.vn.week7.services.CustomerServices;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerServices customerServices;
     @GetMapping("/customers")
-    private  String  showCustomerList(Model model){
-        model.addAttribute("customerList",customerRepository.findAll());
-        //tra ve trang web
+    private  String  showCustomerList(
+        HttpSession httpSession,
+        Model model,
+        @RequestParam("page") Optional<Integer> page,
+        @RequestParam("size")Optional<Integer> size){
+            int currentPage = page.orElse(1);
+            int pageSize = size.orElse(10);
+            Page<Customer> cadidatePage = customerServices.findPaginate(currentPage-1,
+                    pageSize,"name","asc");
+
+            model.addAttribute("customerPage",cadidatePage);
+
+            int totalPages = cadidatePage.getTotalPages();
+            if (totalPages >0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                model.addAttribute("pageNumbers",pageNumbers);
+            }
         return "customer/list";
     }
 

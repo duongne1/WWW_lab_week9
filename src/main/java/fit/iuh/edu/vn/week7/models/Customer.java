@@ -13,7 +13,7 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cust_id", columnDefinition = "nvarchar(150)")
+    @Column(name = "cust_id")
     private long id;
     @Column(name = "cust_name", length = 150, nullable = false)
     private String name;
@@ -37,6 +37,13 @@ public class Customer {
         this.phone = phone;
         this.address = address;
         this.orderList = orderList;
+    }
+
+    public Customer( String name, String email, String phone, String address) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
     }
 
     public Customer(String name, String email) {
