@@ -7,7 +7,7 @@
 <body>
 <div style="margin: 50px">
     <h1>UPDATE CUSTOMER</h1>
-    <form  th:action="@{/customers/update/{id} (id=${customerUpdate.id})}" th:object="${customerUpdate}" method="post"
+    <form  th:action="@{/admin/customers/update/{id} (id=${customerUpdate.id})}" th:object="${customerUpdate}" method="post"
            style="border: 1px solid black; padding: 20px; width: 280px" >
         <div style="margin: 20px">
             <label>Name:</label>

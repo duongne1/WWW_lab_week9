@@ -1,5 +1,6 @@
 package fit.iuh.edu.vn.week7.controllers;
 import fit.iuh.edu.vn.week7.enums.ProductStatus;
+import fit.iuh.edu.vn.week7.models.CartItem;
 import fit.iuh.edu.vn.week7.models.Product;
 import fit.iuh.edu.vn.week7.repositories.ProductRepository;
 import fit.iuh.edu.vn.week7.services.ProductServices;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +47,7 @@ public class ProductController {
                         .collect(Collectors.toList());
                 model.addAttribute("pageNumbers",pageNumbers);
             }
-        return "product/list";
+        return "admin/product/list";
     }
 
     @GetMapping ("/products/show-add-form")
@@ -53,7 +55,7 @@ public class ProductController {
         Product product = new Product();
         model.addAttribute("productAdd",product);
         model.addAttribute("status", ProductStatus.values());
-        return "product/add";
+        return "admin/product/add";
     }
     //add Product
     @PostMapping("/products/add")
@@ -77,7 +79,7 @@ public class ProductController {
         Product product = productRepository.findById(id).orElse(null);
         model.addAttribute("productUpdate", product);
         model.addAttribute("status", ProductStatus.values());
-        return "product/update";
+        return "admin/product/update";
     }
 
 
@@ -98,4 +100,23 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    // addcart
+    @GetMapping("/products/add2cart/{id}")
+    private  String  add2Cart(HttpSession session, Model model, @PathVariable("id") long id){
+        Object obj = session.getAttribute("items");
+        Product product = productRepository.findById(id).get();
+        HashMap<Long, CartItem> cart = null;
+        if (obj == null)
+            cart = new HashMap<>() ;
+        else
+            cart = (HashMap<Long, CartItem>) obj;
+        CartItem item = new CartItem(product,1);
+        if (cart.get(product.getProduct_id() )!=null);
+        item.setAmount(item.getAmount()+1);
+        cart.put(product.getProduct_id(),item);
+
+        session.setAttribute("items",cart);
+        session.setAttribute("itemsOnCart",cart.size());
+        return "redirect:/products";
+    }
 }

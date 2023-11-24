@@ -44,7 +44,7 @@ public class EmployeeController{
                         .collect(Collectors.toList());
                 model.addAttribute("pageNumbers",pageNumbers);
             }
-        return "employee/list";
+        return "admin/employee/list";
     }
 
     @GetMapping("/employees/show-add-form")
@@ -52,7 +52,7 @@ public class EmployeeController{
         Employee employee = new Employee();
         model.addAttribute("employeeAdd", employee);
         model.addAttribute("status", EmployeeStatus.values());
-        return "employee/add";
+        return "admin/employee/add";
     }
 
     @PostMapping("/employees/add")
@@ -74,7 +74,7 @@ public class EmployeeController{
         Employee employee = employeeRepository.findById(id).orElse(null);
         model.addAttribute("employeeUpdate", employee);
         model.addAttribute("status", EmployeeStatus.values());
-        return "employee/update";
+        return "admin/employee/update";
     }
 
     @PostMapping("employees/update/{id}")
